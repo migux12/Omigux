@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rifa — Comprar Números (R$0,40)</title>
+  <meta name="description" content="Compre números de rifa por R$0,40 cada. Pix: franggg78@gmail.com" />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7c3aed; --muted:#94a3b8; --white:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,#071126 0%, #071b2a 100%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:24px;
+    }
+    .container{max-width:1100px;margin:0 auto;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{font-size:20px;margin:0}
+    p.lead{color:var(--muted);margin:6px 0 0;font-size:14px}
+    .card{background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;margin-top:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}}
+    /* numbers */
+    .numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(54px,1fr));gap:8px}
+    .num{
+      background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);
+      padding:10px;border-radius:8px;text-align:center;cursor:pointer;user-select:none;
+      transition:all .12s;
+    }
+    .num:hover{transform:translateY(-4px)}
+    .num.selected{background:linear-gradient(180deg,var(--accent),#4f46e5);border-color:rgba(0,0,0,0.2);color:white;box-shadow:0 6px 18px rgba(124,58,237,0.18)}
+    .controls{display:flex;gap:8px;align-items:center;margin:12px 0;flex-wrap:wrap}
+    .btn{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.04);cursor:pointer;color:var(--white)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);border:0}
+    .summary{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+    .muted{color:var(--muted);font-size:13px}
+    .big{font-size:20px;font-weight:700}
+    input[type="file"]{color:transparent}
+    .actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .copy{display:inline-flex;gap:8px;align-items:center}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo">RG</div>
+        <div>
+          <h1>Rifa — Compre números</h1>
+          <p class="lead">Cada número por <strong>R$0,40</strong>. Pagamento por Pix: <strong>franggg78@gmail.com</strong></p>
+        </div>
+      </div>
+      <div class="muted">Sem integração automática — instruções para pagamento manual</div>
+    </header>
+
+    <section class="card grid" aria-labelledby="title">
+      <div>
+        <h2 id="title">Escolha seus números</h2>
+        <p class="muted">Clique nos números que deseja comprar (máx. 100 números disponíveis).</p>
+
+        <div class="controls">
+          <label class="muted">Mostrar:</label>
+          <select id="rangeSelect" class="btn" title="Escolha a faixa de números">
+            <option value="100">1–100</option>
+            <option value="50">1–50</option>
+            <option value="20">1–20</option>
+          </select>
+
+          <button id="selectRandom" class="btn">Selecionar aleatório</button>
+          <button id="clearBtn" class="btn">Limpar seleção</button>
+
+          <div style="margin-left:auto" class="muted">Preço: <strong>R$0,40</strong> / número</div>
+        </div>
+
+        <div id="numbers" class="numbers" aria-live="polite" style="margin-top:12px"></div>
+
+        <div style="margin-top:14px">
+          <label for="note" class="muted">Observação (nome, contato):</label>
+          <input id="note" type="text" placeholder="Ex: João Silva - WhatsApp +55 11 9xxxx-xxxx" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:8px;background:transparent;color:var(--white)">
+        </div>
+
+        <div style="margin-top:12px" class="muted">Envio de comprovante (preview local):</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <input id="fileInput" type="file" accept="image/*,application/pdf">
+          <button id="removeFile" class="btn">Remover</button>
+        </div>
+        <div id="filePreview" style="margin-top:10px;color:var(--muted);font-size:13px"></div>
+      </div>
+
+      <aside>
+        <div class="summary" aria-labelledby="summaryTitle">
+          <h3 id="summaryTitle">Resumo do pedido</h3>
+          <div style="margin-top:8px">
+            <div class="muted">Números selecionados</div>
+            <div id="chosen" style="min-height:48px;margin-top:6px">— nenhum —</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="muted">Quantidade</div>
+            <div class="big" id="qty">0</div>
+          </div>
+
+          <div style="margin-top:8px">
+            <div class="muted">Total</div>
+            <div class="big" id="total">R$0,00</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="muted">Pix (chave)</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+              <code id="pixKey" style="padding:6px 8px;border-radius:6px;background:rgba(0,0,0,0.2)">franggg78@gmail.com</code>
+              <button id="copyKey" class="btn">Copiar chave</button>
+            </div>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="muted">Mensagem de pagamento (copiar)</div>
+            <textarea id="payMsg" rows="4" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white)" readonly></textarea>
+            <div class="actions">
+              <button id="copyMsg" class="btn">Copiar mensagem</button>
+              <a id="whatsappLink" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Abrir WhatsApp</a>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <small class="muted">Depois de fazer o Pix, envie o comprovante via WhatsApp ou e-mail com seu nome e os números comprados.</small>
+          </div>
+
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <p>Feito com ❤️ — Salve este arquivo como <code>index.html</code> e abra no navegador.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Config
+    const PRICE = 0.40; // reais por número
+    const PIX_KEY = 'franggg78@gmail.com';
+    const PIX_DISPLAY = 'franggg78@gmail.com';
+
+    // Elements
+    const numbersEl = document.getElementById('numbers');
+    const qtyEl = document.getElementById('qty');
+    const totalEl = document.getElementById('total');
+    const chosenEl = document.getElementById('chosen');
+    const pixKeyEl = document.getElementById('pixKey');
+    const copyKeyBtn = document.getElementById('copyKey');
+    const copyMsgBtn = document.getElementById('copyMsg');
+    const payMsgEl = document.getElementById('payMsg');
+    const whatsappLink = document.getElementById('whatsappLink');
+    const rangeSelect = document.getElementById('rangeSelect');
+    const selectRandomBtn = document.getElementById('selectRandom');
+    const clearBtn = document.getElementById('clearBtn');
+    const fileInput = document.getElementById('fileInput');
+    const filePreview = document.getElementById('filePreview');
+    const removeFile = document.getElementById('removeFile');
+    const noteInput = document.getElementById('note');
+
+    let maxNumbers = parseInt(rangeSelect.value,10);
+    let selected = new Set();
+
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+    }
+
+    function buildNumbers(n){
+      numbersEl.innerHTML = '';
+      for(let i=1;i<=n;i++){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'num';
+        btn.textContent = String(i).padStart(3,'0');
+        btn.setAttribute('data-num', i);
+        btn.addEventListener('click', () => toggleNumber(i, btn));
+        numbersEl.appendChild(btn);
+      }
+      refreshUI();
+    }
+
+    function toggleNumber(i, el){
+      if(selected.has(i)){
+        selected.delete(i);
+        el.classList.remove('selected');
+      } else {
+        selected.add(i);
+        el.classList.add('selected');
+      }
+      refreshUI();
+    }
+
+    function refreshUI(){
+      const arr = Array.from(selected).sort((a,b)=>a-b);
+      chosenEl.textContent = arr.length ? arr.map(n=>String(n).padStart(3,'0')).join(', ') : '— nenhum —';
+      qtyEl.textContent = arr.length;
+      const total = Math.round(arr.length * PRICE * 100) / 100;
+      totalEl.textContent = formatBRL(total);
+      // payment message
+      const note = noteInput.value.trim();
+      const memo = note ? ` | ${note}` : '';
+      const msg = `Pagamento Pix para: ${PIX_DISPLAY}\nValor: ${formatBRL(total)}\nNúmeros: ${arr.length ? arr.map(n=>String(n).padStart(3,'0')).join(', ') : '(nenhum)'}${memo}\n\nPor favor, envie o comprovante para confirmar sua participação.`;
+      payMsgEl.value = msg;
+      // whatsapp link
+      const whatsappText = encodeURIComponent(msg);
+      whatsappLink.href = `https://wa.me/?text=${whatsappText}`;
+      whatsappLink.textContent = 'Enviar WhatsApp';
+      pixKeyEl.textContent = PIX_KEY;
+    }
+
+    // copy helpers
+    copyKeyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(PIX_KEY);
+        copyKeyBtn.textContent = 'Chave copiada!';
+        setTimeout(()=>copyKeyBtn.textContent='Copiar chave',1200);
+      }catch(e){
+        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente: ' + PIX_KEY);
+      }
+    });
+
+    copyMsgBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(payMsgEl.value);
+        copyMsgBtn.textContent = 'Mensagem copiada!';
+        setTimeout(()=>copyMsgBtn.textContent='Copiar mensagem',1200);
+      }catch(e){
+        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.');
+      }
+    });
+
+    // range selection
+    rangeSelect.addEventListener('change', () => {
+      maxNumbers = parseInt(rangeSelect.value,10);
+      selected.clear();
+      buildNumbers(maxNumbers);
+    });
+
+    // random select
+    selectRandomBtn.addEventListener('click', ()=>{
+      const howMany = parseInt(prompt('Quantos números aleatórios deseja?', '1'),10);
+      if(!howMany || howMany<=0) return;
+      selected.clear();
+      const max = maxNumbers;
+      while(selected.size < Math.min(howMany, max)){
+        selected.add(Math.floor(Math.random()*max) + 1);
+      }
+      // update DOM classes
+      document.querySelectorAll('.num').forEach(btn=>{
+        const n = parseInt(btn.getAttribute('data-num'),10);
+        btn.classList.toggle('selected', selected.has(n));
+      });
+      refreshUI();
+    });
+
+    clearBtn.addEventListener('click', ()=> {
+      selected.clear();
+      document.querySelectorAll('.num').forEach(btn=>btn.classList.remove('selected'));
+      refreshUI();
+    });
+
+    // file preview (local only)
+    fileInput.addEventListener('change', ()=> {
+      const f = fileInput.files[0];
+      if(!f){ filePreview.textContent=''; return; }
+      if(f.type.startsWith('image/')){
+        const url = URL.createObjectURL(f);
+        filePreview.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px"><img src="${url}" alt="comprovante" style="max-width:100%;border-radius:8px"><small class="muted">${f.name}</small></div>`;
+      } else {
+        filePreview.innerHTML = `<div><strong>${f.name}</strong> <span class="muted">(arquivo selecionado)</span></div>`;
+      }
+    });
+
+    removeFile.addEventListener('click', ()=> {
+      fileInput.value = '';
+      filePreview.innerHTML = '';
+    });
+
+    // initialize
+    buildNumbers(maxNumbers);
+    refreshUI();
+
+    // accessibility: keyboard support for numbers
+    numbersEl.addEventListener('keydown', (e) => {
+      const t = e.target;
+      if(t.classList && t.classList.contains('num')){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          t.click();
+        }
+      }
+    });
+
+    // friendly warning on unload (if selected)
+    window.addEventListener('beforeunload', (e) => {
+      if(selected.size>0){
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+
+  </script>
+</body>
+</html>

@@ -3,312 +3,272 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rifa — Comprar Números (R$0,40)</title>
-  <meta name="description" content="Compre números de rifa por R$0,40 cada. Pix: franggg78@gmail.com" />
+  <title>Loja PIX - Demo</title>
   <style>
-    :root{
-      --bg:#0f1724; --card:#0b1220; --accent:#7c3aed; --muted:#94a3b8; --white:#ffffff;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:linear-gradient(180deg,#071126 0%, #071b2a 100%);
-      color:var(--white);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:24px;
-    }
-    .container{max-width:1100px;margin:0 auto;}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700}
-    h1{font-size:20px;margin:0}
-    p.lead{color:var(--muted);margin:6px 0 0;font-size:14px}
-    .card{background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;margin-top:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-    @media(max-width:880px){.grid{grid-template-columns:1fr}}
-    /* numbers */
-    .numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(54px,1fr));gap:8px}
-    .num{
-      background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);
-      padding:10px;border-radius:8px;text-align:center;cursor:pointer;user-select:none;
-      transition:all .12s;
-    }
-    .num:hover{transform:translateY(-4px)}
-    .num.selected{background:linear-gradient(180deg,var(--accent),#4f46e5);border-color:rgba(0,0,0,0.2);color:white;box-shadow:0 6px 18px rgba(124,58,237,0.18)}
-    .controls{display:flex;gap:8px;align-items:center;margin:12px 0;flex-wrap:wrap}
-    .btn{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.04);cursor:pointer;color:var(--white)}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);border:0}
-    .summary{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-    .muted{color:var(--muted);font-size:13px}
-    .big{font-size:20px;font-weight:700}
-    input[type="file"]{color:transparent}
-    .actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-    .copy{display:inline-flex;gap:8px;align-items:center}
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    :root{--accent:#0b84ff;--muted:#666}
+    body{font-family:Inter,Segoe UI,Arial;margin:0;background:#f5f7fb;color:#111}
+    header{background:white;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .brand{font-weight:700;font-size:18px;color:var(--accent)}
+    .container{max-width:1100px;margin:24px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:white;padding:12px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    img{max-width:100%;border-radius:8px}
+    .product-title{font-weight:600;margin:6px 0}
+    .muted{color:var(--muted);font-size:14px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,132,255,.12)}
+    .top-actions{display:flex;gap:8px}
+    aside{position:fixed;right:18px;top:78px;width:320px}
+    .cart{background:white;padding:12px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+    .cart h3{margin:0 0 8px 0}
+    .row{display:flex;align-items:center;justify-content:space-between}
+    label{display:block;margin:8px 0 4px}
+    input,select,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+    .admin-panel{margin-top:18px}
+    .small{font-size:13px;color:#666}
+    footer{text-align:center;color:#999;padding:28px 12px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}aside{position:static;width:auto;margin-top:16px}}
+    @media (max-width:600px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="container" role="main">
-    <header>
-      <div class="brand">
-        <div class="logo">RG</div>
-        <div>
-          <h1>Rifa — Compre números</h1>
-          <p class="lead">Cada número por <strong>R$0,40</strong>. Pagamento por Pix: <strong>franggg78@gmail.com</strong></p>
-        </div>
+  <header>
+    <div class="brand">HK STORE — Loja PIX (Demo)</div>
+    <div class="top-actions">
+      <div class="small">Modo: <strong id="modeLabel">Visão pública</strong></div>
+      <button class="btn ghost" id="btnAdminToggle">Entrar como Admin</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <div class="row" style="margin-bottom:12px">
+        <h2>Produtos</h2>
+        <div class="small">Adicione ao carrinho e realize o pagamento via PIX</div>
       </div>
-      <div class="muted">Sem integração automática — instruções para pagamento manual</div>
-    </header>
-
-    <section class="card grid" aria-labelledby="title">
-      <div>
-        <h2 id="title">Escolha seus números</h2>
-        <p class="muted">Clique nos números que deseja comprar (máx. 100 números disponíveis).</p>
-
-        <div class="controls">
-          <label class="muted">Mostrar:</label>
-          <select id="rangeSelect" class="btn" title="Escolha a faixa de números">
-            <option value="100">1–100</option>
-            <option value="50">1–50</option>
-            <option value="20">1–20</option>
-          </select>
-
-          <button id="selectRandom" class="btn">Selecionar aleatório</button>
-          <button id="clearBtn" class="btn">Limpar seleção</button>
-
-          <div style="margin-left:auto" class="muted">Preço: <strong>R$0,40</strong> / número</div>
-        </div>
-
-        <div id="numbers" class="numbers" aria-live="polite" style="margin-top:12px"></div>
-
-        <div style="margin-top:14px">
-          <label for="note" class="muted">Observação (nome, contato):</label>
-          <input id="note" type="text" placeholder="Ex: João Silva - WhatsApp +55 11 9xxxx-xxxx" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:8px;background:transparent;color:var(--white)">
-        </div>
-
-        <div style="margin-top:12px" class="muted">Envio de comprovante (preview local):</div>
-        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-          <input id="fileInput" type="file" accept="image/*,application/pdf">
-          <button id="removeFile" class="btn">Remover</button>
-        </div>
-        <div id="filePreview" style="margin-top:10px;color:var(--muted);font-size:13px"></div>
-      </div>
-
-      <aside>
-        <div class="summary" aria-labelledby="summaryTitle">
-          <h3 id="summaryTitle">Resumo do pedido</h3>
-          <div style="margin-top:8px">
-            <div class="muted">Números selecionados</div>
-            <div id="chosen" style="min-height:48px;margin-top:6px">— nenhum —</div>
-          </div>
-
-          <div style="margin-top:12px">
-            <div class="muted">Quantidade</div>
-            <div class="big" id="qty">0</div>
-          </div>
-
-          <div style="margin-top:8px">
-            <div class="muted">Total</div>
-            <div class="big" id="total">R$0,00</div>
-          </div>
-
-          <div style="margin-top:12px">
-            <div class="muted">Pix (chave)</div>
-            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
-              <code id="pixKey" style="padding:6px 8px;border-radius:6px;background:rgba(0,0,0,0.2)">franggg78@gmail.com</code>
-              <button id="copyKey" class="btn">Copiar chave</button>
-            </div>
-          </div>
-
-          <div style="margin-top:10px">
-            <div class="muted">Mensagem de pagamento (copiar)</div>
-            <textarea id="payMsg" rows="4" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white)" readonly></textarea>
-            <div class="actions">
-              <button id="copyMsg" class="btn">Copiar mensagem</button>
-              <a id="whatsappLink" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Abrir WhatsApp</a>
-            </div>
-          </div>
-
-          <div style="margin-top:12px">
-            <small class="muted">Depois de fazer o Pix, envie o comprovante via WhatsApp ou e-mail com seu nome e os números comprados.</small>
-          </div>
-
-        </div>
-      </aside>
+      <div id="products" class="grid"></div>
     </section>
 
-    <footer>
-      <p>Feito com ❤️ — Salve este arquivo como <code>index.html</code> e abra no navegador.</p>
-    </footer>
-  </div>
+    <aside>
+      <div class="cart">
+        <h3>Carrinho</h3>
+        <div id="cartList"></div>
+        <div class="row" style="margin-top:8px"><strong>Total:</strong><strong id="totalValue">R$ 0,00</strong></div>
+        <div style="margin-top:12px">
+          <label for="customerName">Nome (opcional)</label>
+          <input id="customerName" placeholder="Nome do comprador" />
+          <label for="customerNote">Observação</label>
+          <textarea id="customerNote" rows="2" placeholder="Ex: pedido para entrega"></textarea>
+          <button class="btn" id="btnCheckout" style="margin-top:8px" >Gerar PIX</button>
+        </div>
+        <div id="pixArea" style="display:none;margin-top:12px"></div>
+      </div>
 
-  <script>
-    // Config
-    const PRICE = 0.40; // reais por número
-    const PIX_KEY = 'franggg78@gmail.com';
-    const PIX_DISPLAY = 'franggg78@gmail.com';
+      <div class="card admin-panel" id="adminPanel" style="display:none;margin-top:14px">
+        <h4>Painel Admin</h4>
+        <div class="small">Configurações da loja</div>
+        <label>Chave PIX (franggg78@gmail.com)</label>
+        <input id="pixKey" placeholder="chavepix@exemplo.com" />
+        <label>Nome do Recebedor</label>
+        <input id="receiverName" placeholder="Nome/Empresa" />
+        <label>Adicionar produto</label>
+        <input id="pName" placeholder="Nome do produto" />
+        <label>Preço (R$)</label>
+        <input id="pPrice" placeholder="12.50" />
+        <label>Quantidade em estoque</label>
+        <input id="pStock" placeholder="10" />
+        <label>URL da imagem (opcional)</label>
+        <input id="pImage" placeholder="https://...jpg" />
+        <button class="btn" id="btnAddProduct" style="margin-top:8px">Adicionar/Atualizar</button>
+        <button class="btn ghost" id="btnLogoutAdmin" style="margin-top:8px">Sair do Admin</button>
+      </div>
+    </aside>
+  </main>
 
-    // Elements
-    const numbersEl = document.getElementById('numbers');
-    const qtyEl = document.getElementById('qty');
-    const totalEl = document.getElementById('total');
-    const chosenEl = document.getElementById('chosen');
-    const pixKeyEl = document.getElementById('pixKey');
-    const copyKeyBtn = document.getElementById('copyKey');
-    const copyMsgBtn = document.getElementById('copyMsg');
-    const payMsgEl = document.getElementById('payMsg');
-    const whatsappLink = document.getElementById('whatsappLink');
-    const rangeSelect = document.getElementById('rangeSelect');
-    const selectRandomBtn = document.getElementById('selectRandom');
-    const clearBtn = document.getElementById('clearBtn');
-    const fileInput = document.getElementById('fileInput');
-    const filePreview = document.getElementById('filePreview');
-    const removeFile = document.getElementById('removeFile');
-    const noteInput = document.getElementById('note');
+  <footer> Salve este arquivo como <code>index.html</code>. Para publicar: GitHub Pages ou qualquer host estático. </footer>
 
-    let maxNumbers = parseInt(rangeSelect.value,10);
-    let selected = new Set();
+<script>
+// ======= armazenamento local e estado =======
+const LS_PRODUCTS = 'hk_products_v1'
+const LS_CART = 'hk_cart_v1'
+const LS_STORE = 'hk_store_cfg_v1'
+let products = JSON.parse(localStorage.getItem(LS_PRODUCTS) || 'null') || [
+  {id:1,name:'Caneca HK',price:20.00,stock:8,image:''},
+  {id:2,name:'Camiseta HK',price:45.50,stock:5,image:''},
+  {id:3,name:'Adesivo HK',price:3.99,stock:50,image:''}
+]
+let cart = JSON.parse(localStorage.getItem(LS_CART) || '[]')
+let storeCfg = JSON.parse(localStorage.getItem(LS_STORE) || 'null') || {pixKey:'franggg78@gmail.com',receiverName:'HK STORE'}
+let isAdmin=false
+const currency = v=> 'R$ '+Number(v).toFixed(2).replace('.',',')
 
-    function formatBRL(v){
-      return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-    }
+// ======= render =======
+function renderProducts(){
+  const el = document.getElementById('products'); el.innerHTML=''
+  products.forEach(p=>{
+    const div = document.createElement('div'); div.className='card'
+    div.innerHTML = `
+      <div style="height:140px;display:flex;align-items:center;justify-content:center;background:#fbfdff;border-radius:8px;overflow:hidden;margin-bottom:8px">
+        ${p.image?`<img src="${p.image}" alt="${p.name}" style="height:100%;object-fit:cover">`:'<div class="muted">Sem imagem</div>'}
+      </div>
+      <div class="product-title">${p.name}</div>
+      <div class="muted">${currency(p.price)} • Estoque: <strong>${p.stock}</strong></div>
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+        <input type="number" min="1" max="${p.stock}" value="1" style="width:72px;padding:6px;border-radius:8px;border:1px solid #e6e9ef" id="q_${p.id}">
+        <button class="btn" onclick="addToCart(${p.id})">Adicionar</button>
+        <button class="btn ghost" onclick="viewProduct(${p.id})">Detalhes</button>
+      </div>
+    `
+    el.appendChild(div)
+  })
+}
 
-    function buildNumbers(n){
-      numbersEl.innerHTML = '';
-      for(let i=1;i<=n;i++){
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'num';
-        btn.textContent = String(i).padStart(3,'0');
-        btn.setAttribute('data-num', i);
-        btn.addEventListener('click', () => toggleNumber(i, btn));
-        numbersEl.appendChild(btn);
-      }
-      refreshUI();
-    }
+function renderCart(){
+  const el = document.getElementById('cartList'); el.innerHTML=''
+  if(cart.length===0){el.innerHTML='<div class="small">Seu carrinho está vazio</div>'; document.getElementById('totalValue').innerText=currency(0); return}
+  let total=0
+  cart.forEach(item=>{
+    const p = products.find(x=>x.id===item.id)
+    if(!p) return
+    const row = document.createElement('div'); row.style.marginBottom='8px'
+    row.innerHTML = `
+      <div class="row">
+        <div style="flex:1">
+          <div style="font-weight:600">${p.name}</div>
+          <div class="small">${currency(p.price)} x ${item.qty}</div>
+        </div>
+        <div style="text-align:right">
+          <div>${currency(p.price*item.qty)}</div>
+          <div style="margin-top:6px"><button class="btn ghost" onclick="removeFromCart(${item.id})">Remover</button></div>
+        </div>
+      </div>
+    `
+    el.appendChild(row)
+    total += p.price * item.qty
+  })
+  document.getElementById('totalValue').innerText = currency(total)
+}
 
-    function toggleNumber(i, el){
-      if(selected.has(i)){
-        selected.delete(i);
-        el.classList.remove('selected');
-      } else {
-        selected.add(i);
-        el.classList.add('selected');
-      }
-      refreshUI();
-    }
+// ======= ações cart =======
+function addToCart(id){
+  const qtyInput = document.getElementById('q_'+id)
+  let qty = Number(qtyInput?.value || 1)
+  if(qty<=0) qty=1
+  const p = products.find(x=>x.id===id)
+  if(!p) return alert('Produto não encontrado')
+  if(qty>p.stock) return alert('Quantidade maior que o estoque')
+  const exists = cart.find(x=>x.id===id)
+  if(exists){
+    if(exists.qty + qty > p.stock) return alert('Estoque insuficiente')
+    exists.qty += qty
+  } else cart.push({id,qty})
+  persistCart(); renderCart()
+}
 
-    function refreshUI(){
-      const arr = Array.from(selected).sort((a,b)=>a-b);
-      chosenEl.textContent = arr.length ? arr.map(n=>String(n).padStart(3,'0')).join(', ') : '— nenhum —';
-      qtyEl.textContent = arr.length;
-      const total = Math.round(arr.length * PRICE * 100) / 100;
-      totalEl.textContent = formatBRL(total);
-      // payment message
-      const note = noteInput.value.trim();
-      const memo = note ? ` | ${note}` : '';
-      const msg = `Pagamento Pix para: ${PIX_DISPLAY}\nValor: ${formatBRL(total)}\nNúmeros: ${arr.length ? arr.map(n=>String(n).padStart(3,'0')).join(', ') : '(nenhum)'}${memo}\n\nPor favor, envie o comprovante para confirmar sua participação.`;
-      payMsgEl.value = msg;
-      // whatsapp link
-      const whatsappText = encodeURIComponent(msg);
-      whatsappLink.href = `https://wa.me/?text=${whatsappText}`;
-      whatsappLink.textContent = 'Enviar WhatsApp';
-      pixKeyEl.textContent = PIX_KEY;
-    }
+function removeFromCart(id){ cart = cart.filter(x=>x.id!==id); persistCart(); renderCart() }
 
-    // copy helpers
-    copyKeyBtn.addEventListener('click', async () => {
-      try{
-        await navigator.clipboard.writeText(PIX_KEY);
-        copyKeyBtn.textContent = 'Chave copiada!';
-        setTimeout(()=>copyKeyBtn.textContent='Copiar chave',1200);
-      }catch(e){
-        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente: ' + PIX_KEY);
-      }
-    });
+function persistCart(){ localStorage.setItem(LS_CART, JSON.stringify(cart)) }
 
-    copyMsgBtn.addEventListener('click', async () => {
-      try{
-        await navigator.clipboard.writeText(payMsgEl.value);
-        copyMsgBtn.textContent = 'Mensagem copiada!';
-        setTimeout(()=>copyMsgBtn.textContent='Copiar mensagem',1200);
-      }catch(e){
-        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.');
-      }
-    });
+// ======= checkout / PIX =======
+function gerarTextoPIX(amount, key, receiver, reference){
+  // Gera um texto simples para copiar ou criar QR
+  // Não implementa o payload do BRCode completo — é um demo que gera referência e instruções
+  return `Pagamento via PIX\nChave: ${key}\nRecebedor: ${receiver}\nValor: R$ ${Number(amount).toFixed(2)}\nReferência: ${reference}`
+}
 
-    // range selection
-    rangeSelect.addEventListener('change', () => {
-      maxNumbers = parseInt(rangeSelect.value,10);
-      selected.clear();
-      buildNumbers(maxNumbers);
-    });
+function generatePIXQr(data){
+  // Usa serviço público de geração de QR para imagem (online)
+  const url = 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=' + encodeURIComponent(data)
+  return url
+}
 
-    // random select
-    selectRandomBtn.addEventListener('click', ()=>{
-      const howMany = parseInt(prompt('Quantos números aleatórios deseja?', '1'),10);
-      if(!howMany || howMany<=0) return;
-      selected.clear();
-      const max = maxNumbers;
-      while(selected.size < Math.min(howMany, max)){
-        selected.add(Math.floor(Math.random()*max) + 1);
-      }
-      // update DOM classes
-      document.querySelectorAll('.num').forEach(btn=>{
-        const n = parseInt(btn.getAttribute('data-num'),10);
-        btn.classList.toggle('selected', selected.has(n));
-      });
-      refreshUI();
-    });
+function checkoutPrepare(){
+  if(cart.length===0) return alert('Carrinho vazio')
+  const total = cart.reduce((s,it)=>{
+    const p = products.find(x=>x.id===it.id); return s + (p? p.price*it.qty:0)
+  },0)
+  const key = storeCfg.pixKey || ''
+  const receiver = storeCfg.receiverName || ''
+  const reference = 'PED-' + Date.now()
+  const text = gerarTextoPIX(total, key, receiver, reference)
+  const qr = generatePIXQr(text)
+  const area = document.getElementById('pixArea')
+  area.style.display='block'
+  area.innerHTML = `
+    <div style="text-align:center">
+      <div style="font-weight:600">Pagar com PIX</div>
+      <img src="${qr}" alt="QR PIX" style="margin:8px 0;border-radius:8px">
+      <div class="small">Chave: <strong>${key}</strong></div>
+      <div class="small">Valor: <strong>${currency(total)}</strong></div>
+      <div class="small">Referência: <strong>${reference}</strong></div>
+      <div style="margin-top:8px"><button class="btn" onclick="copiarTexto('${escapeHtml(text)}')">Copiar instruções</button></div>
+      <div style="margin-top:8px" class="small">Depois de pagar, confirme manualmente o pedido com o vendedor (este demo não faz conciliação automática).</div>
+    </div>
+  `
+}
 
-    clearBtn.addEventListener('click', ()=> {
-      selected.clear();
-      document.querySelectorAll('.num').forEach(btn=>btn.classList.remove('selected'));
-      refreshUI();
-    });
+function copiarTexto(t){ const textarea = document.createElement('textarea'); textarea.value = unescapeHtml(t); document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); textarea.remove(); alert('Instruções copiadas para a área de transferência') }
 
-    // file preview (local only)
-    fileInput.addEventListener('change', ()=> {
-      const f = fileInput.files[0];
-      if(!f){ filePreview.textContent=''; return; }
-      if(f.type.startsWith('image/')){
-        const url = URL.createObjectURL(f);
-        filePreview.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px"><img src="${url}" alt="comprovante" style="max-width:100%;border-radius:8px"><small class="muted">${f.name}</small></div>`;
-      } else {
-        filePreview.innerHTML = `<div><strong>${f.name}</strong> <span class="muted">(arquivo selecionado)</span></div>`;
-      }
-    });
+function escapeHtml(s){ return s.replace(/'/g, "\\'").replace(/\n/g,'\\n') }
+function unescapeHtml(s){ return s }
 
-    removeFile.addEventListener('click', ()=> {
-      fileInput.value = '';
-      filePreview.innerHTML = '';
-    });
+// ======= admin =======
+function toggleAdmin(){
+  if(!isAdmin){
+    const pass = prompt('Senha de admin (demo):')
+    if(pass !== 'equipehkdono') return alert('Senha incorreta.');
+    isAdmin=true; document.getElementById('modeLabel').innerText='Admin'; document.getElementById('adminPanel').style.display='block'; document.getElementById('btnAdminToggle').innerText='Painel aberto'; loadAdminValues()
+  } else {
+    isAdmin=false; document.getElementById('modeLabel').innerText='Visão pública'; document.getElementById('adminPanel').style.display='none'; document.getElementById('btnAdminToggle').innerText='Entrar como Admin'
+  }
+}
 
-    // initialize
-    buildNumbers(maxNumbers);
-    refreshUI();
+function loadAdminValues(){
+  document.getElementById('pixKey').value = storeCfg.pixKey || ''
+  document.getElementById('receiverName').value = storeCfg.receiverName || ''
+}
 
-    // accessibility: keyboard support for numbers
-    numbersEl.addEventListener('keydown', (e) => {
-      const t = e.target;
-      if(t.classList && t.classList.contains('num')){
-        if(e.key === 'Enter' || e.key === ' '){
-          e.preventDefault();
-          t.click();
-        }
-      }
-    });
+function addOrUpdateProduct(){
+  const name = document.getElementById('pName').value.trim();
+  const price = parseFloat(document.getElementById('pPrice').value.replace(',','.'))
+  const stock = parseInt(document.getElementById('pStock').value)
+  const image = document.getElementById('pImage').value.trim()
+  if(!name || isNaN(price) || isNaN(stock)) return alert('Preencha nome, preço e estoque corretamente')
+  const nextId = products.length? Math.max(...products.map(p=>p.id))+1:1
+  const prod = {id: nextId,name,price,stock,image}
+  products.push(prod)
+  localStorage.setItem(LS_PRODUCTS, JSON.stringify(products))
+  renderProducts()
+  alert('Produto adicionado')
+  // limpa campos
+  document.getElementById('pName').value=''; document.getElementById('pPrice').value=''; document.getElementById('pStock').value=''; document.getElementById('pImage').value=''
+}
 
-    // friendly warning on unload (if selected)
-    window.addEventListener('beforeunload', (e) => {
-      if(selected.size>0){
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    });
+function saveStoreCfg(){
+  storeCfg.pixKey = document.getElementById('pixKey').value.trim()
+  storeCfg.receiverName = document.getElementById('receiverName').value.trim()
+  localStorage.setItem(LS_STORE, JSON.stringify(storeCfg))
+  alert('Configurações salvas')
+}
 
-  </script>
+// small product viewer
+function viewProduct(id){
+  const p = products.find(x=>x.id===id)
+  if(!p) return
+  alert(`${p.name}\nPreço: ${currency(p.price)}\nEstoque: ${p.stock}`)
+}
+
+// bind events
+document.getElementById('btnAdminToggle').addEventListener('click', toggleAdmin)
+document.getElementById('btnAddProduct').addEventListener('click', addOrUpdateProduct)
+document.getElementById('btnLogoutAdmin').addEventListener('click', ()=>{isAdmin=false;document.getElementById('adminPanel').style.display='none';document.getElementById('modeLabel').innerText='Visão pública';document.getElementById('btnAdminToggle').innerText='Entrar como Admin'})
+document.getElementById('btnCheckout').addEventListener('click', checkoutPrepare)
+document.getElementById('pixKey').addEventListener('blur', saveStoreCfg)
+document.getElementById('receiverName').addEventListener('blur', saveStoreCfg)
+
+// initial render
+renderProducts(); renderCart(); loadAdminValues()
+
+</script>
 </body>
 </html>
